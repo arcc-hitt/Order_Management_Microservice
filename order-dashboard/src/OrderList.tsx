@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 type Order = {
@@ -10,7 +10,6 @@ type Order = {
 };
 
 export default function OrderList() {
-  // start with an empty array
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
@@ -18,8 +17,6 @@ export default function OrderList() {
       .get('http://localhost:8081/api/orders')
       .then(res => {
         const data = res.data;
-        // If Spring Data JPA is returning a Page object, it'll be in `data.content`
-        // Otherwise, assume `data` itself is an array
         const list: Order[] = Array.isArray(data)
           ? data
           : (data?.content as Order[]) ?? [];
@@ -27,24 +24,31 @@ export default function OrderList() {
       })
       .catch(err => {
         console.error('Failed to fetch orders:', err);
-        setOrders([]);  // fallback to empty array
+        setOrders([]);
       });
   }, []);
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl">Existing Orders</h2>
-      <ul>
+    <div>
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Existing Orders</h2>
+      <div className="space-y-3">
         {orders.length > 0 ? (
           orders.map(o => (
-            <li key={o.id}>
-              {o.customerName} ordered {o.quantity}×{o.itemName} @ ₹{o.price}
-            </li>
+            <div
+              key={o.id}
+              className="p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition"
+            >
+              <p className="text-gray-700 font-medium">
+                <span className="text-indigo-600">{o.customerName}</span> ordered{' '}
+                <strong>{o.quantity}</strong> × <span className="italic">{o.itemName}</span>
+              </p>
+              <p className="text-sm text-gray-500">Total: ₹{o.quantity * o.price}</p>
+            </div>
           ))
         ) : (
-          <li>No orders found.</li>
+          <p className="text-gray-500 italic">No orders found.</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
