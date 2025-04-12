@@ -11,7 +11,6 @@ A full-stack, production-style *Order Management System* built with *Spring Boot
 - *Clean Architecture*: Controller → Service → Repository → Entity
 - *DTO-based Validation* using @Valid, @NotBlank, @Min, etc.
 - *Global Exception Handling* with @ControllerAdvice
-- *Auto-generated Swagger Docs* using springdoc-openapi
 - *In-memory H2 Database* for development & testing
 
 ### Frontend (React.js)
@@ -29,7 +28,6 @@ A full-stack, production-style *Order Management System* built with *Spring Boot
 |--------------|----------------------------------|
 | Backend      | Java 17, Spring Boot, Spring Data JPA |
 | Database     | H2 (In-Memory)                   |
-| API Docs     | OpenAPI/Swagger (springdoc-openapi) |
 | Testing      | JUnit 5                          |
 | Frontend     | React.js, Vite, Axios, React Query |
 | Validation   | React Hook Form, Zod, Hibernate Validator |
